@@ -107,3 +107,4 @@ module.exports.createTable = createTable;
 module.exports.insert = insert;
 module.exports.find = find;
 module.exports.select = select;
+module.exports.query = Query;
