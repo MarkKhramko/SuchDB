@@ -36,6 +36,9 @@ build/Release
 node_modules/
 jspm_packages/
 
+# Secret file
+.mark_s
+
 # Typescript v1 declaration files
 typings/
 
@@ -56,4 +59,7 @@ typings/
 
 # dotenv environment variables file
 .env
+
+# Mac storage
+.DS_Store
 

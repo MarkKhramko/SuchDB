@@ -1,0 +1,28 @@
+{
+  "name": "ramdb",
+  "version": "0.0.1",
+  "description": "Real time JS database, fully loaded into memory.",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "dependencies": {
+    "uuid": "^3.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MarkKhramko/RamDB.git"
+  },
+  "keywords": [
+    "real-time",
+    "ram",
+    "JSON",
+    "document"
+  ],
+  "author": "Mark Khramko",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/MarkKhramko/RamDB/issues"
+  },
+  "homepage": "https://github.com/MarkKhramko/RamDB#readme"
+}
