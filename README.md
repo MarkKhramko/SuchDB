@@ -1,18 +1,29 @@
-# RamDB
+# SuchDB
 ### Real time JS database, fully loaded into memory.
 ### !Proof of work, not for commercial use!
+Install:
+```
+npm install suchdb --save
+```
+
 Basic use:
 ```
-var ramdb = require('<path>');
-var Query = ramdb.query;
+var suchdb = require('suchdb');
 ...
-ramdb.createTable('transactions');
-ramdb.insert('transactions', {'amount':90, "currency":"Euro", "sender":"John Appleseed", "receiver":"Steve Props"});
+// Create table
+suchdb.createTable('transactions');
+// Insert data
+suchdb.insert('transactions', {'amount':90, "currency":"Euro", "sender":"John Appleseed", "receiver":"Steve Props"});
 ```
-How to use queries:
+Query usage:
 ```
+var suchdb = require('suchdb');
+var Query = suchdb.query;
+...
+// Create query object
 let query = new Query().where('amount', '>=', 89).first(10);
-let rows = select('transactions', query);
+// Perform rows selection
+let rows = suchdb.select('transactions', query);
 // Result (considering data in previous example)
 // [{'id':<uuid>, 'amount':90, "currency":"Euro", "sender":"John Appleseed", "receiver":"Steve Props"}]
 ```

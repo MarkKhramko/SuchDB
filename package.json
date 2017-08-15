@@ -1,5 +1,5 @@
 {
-  "name": "ramdb",
+  "name": "suchdb",
   "version": "0.0.1",
   "description": "Real time JSON database, fully loaded into ram.",
   "main": "index.js",
