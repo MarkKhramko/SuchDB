@@ -8,8 +8,11 @@ var Query = ramdb.query;
 ...
 ramdb.createTable('transactions');
 ramdb.insert('transactions', {'amount':90, "currency":"Euro", "sender":"John Appleseed", "receiver":"Steve Props"});
+```
+How to use queries:
+```
 let query = new Query().where('amount', '>=', 89).first(10);
 let rows = select('transactions', query);
-// Result
+// Result (considering data in previous example)
 // [{'id':<uuid>, 'amount':90, "currency":"Euro", "sender":"John Appleseed", "receiver":"Steve Props"}]
 ```
