@@ -1,7 +1,7 @@
 {
   "name": "ramdb",
   "version": "0.0.1",
-  "description": "Real time JS database, fully loaded into memory.",
+  "description": "Real time JSON database, fully loaded into ram.",
   "main": "index.js",
   "scripts": {
     "test": "test"
@@ -15,6 +15,7 @@
   },
   "keywords": [
     "real-time",
+    "database",
     "ram",
     "JSON",
     "document"
