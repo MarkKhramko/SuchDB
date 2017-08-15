@@ -1,13 +1,56 @@
 const Table = require('./bin/table');
 const Query = require('./bin/query');
 
-// Dev
-var present = require('present');
-
-
-// Main DB object
+/**
+ * db - object that holds all tables
+*/
 const db = {};
 
+function construct(){
+}
+
+// #section-begin Private API
+/**
+ * Returns result of comparing row's key with given value
+ *
+ * @param <Object> row
+ * @param <String> key
+ * @param <Object> value
+ * @param <String> comparison
+ * @return <Bool>
+ */
+function doesRowMathComparison(row, key, value, comparison){
+	let result;
+	switch(comparison){
+		case '=':
+			result = row[key] == value;
+			break;
+		case '>':
+			result = row[key] > value;
+			break;
+		case '>=':
+			result = row[key] >= value;
+			break;
+		case '<':
+			result = row[key] < value;
+			break;
+		case '<=':
+			result = row[key] <= value;
+			break;
+		default:
+			result = false;
+	}
+	return result;
+}
+// #section-end Private API
+
+// #section-begin Public API
+/**
+ * Returns bool of successfully creating new table
+ *
+ * @param <String> tableName
+ * @return <Bool>
+ */
 function createTable(tableName){
 	if(db[tableName] = new Table()){
 		return true;
@@ -17,30 +60,68 @@ function createTable(tableName){
 	}
 }
 
-function insert(tableName, obj){
+/**
+ * Returns ID of newly inserted row or Error object if there was error
+ *
+ * @param <String> tableName
+ * @param <Object> row
+ *
+ * @return <String>
+ */
+function insert(tableName, row){
 	if(db[tableName] == null){
 		throw new Error('Table ' + tableName + " doesn't exist.");
 	}
 	else{
-		let id = db[tableName].insert(obj);
+		let id = db[tableName].insert(row);
 		if(id){
 			return id;
 		}
 		else{
-			throw new Error('Could not insert object ' + JSON.stringify(obj) + " into table " + tableName);
+			throw new Error('Could not insert object ' + JSON.stringify(row) + " into table " + tableName);
 		}
 	}
 }
 
+/**
+ * Returns array with one row, where id is equal to given
+ * or empty array, if nothing found.
+ * Returns Error object, if given table doesnt exists
+ *
+ * @param <String> tableName
+ * @param <String> id
+ * @return <Array>
+ */
 function find(tableName, id){
+	console.log('Needed: ' + id);
 	if(db[tableName] == null){
 		throw new Error('Table ' + tableName + " doesn't exist.");
 	}
 	else{
-		return db[tableName][id];
+		let table = db[tableName];
+		let rowsArray = table.rows;
+
+		let foundRow = [];
+		for(var i=0; i < rowsArray.length; i++){
+			let row = rowsArray[i];
+			if(row.id == id){
+				foundRow = [row];
+				break;
+			}
+		}
+		return foundRow;
 	}
 }
 
+/**
+ * Returns array with rows that match query
+ * or empty array, if nothing match.
+ * Returns Error object, if given table doesnt exists
+ *
+ * @param <String> tableName
+ * @param <Query> queryObj
+ * @return <Array>
+ */
 function select(tableName, queryObj){
 
 	if(db[tableName] == null){
@@ -59,26 +140,15 @@ function select(tableName, queryObj){
 
 				var selectedArray = [];
 				resultArray.forEach(function(row, index){
-					let shouldAddToArray = false;
-					switch(comparison){
-						case '=':
-							shouldAddToArray = row[key] == value;
-							break;
-						case '>':
-							shouldAddToArray = row[key] > value;
-							break;
-						case '>=':
-							shouldAddToArray = row[key] >= value;
-							break;
-						case '<':
-							shouldAddToArray = row[key] < value;
-							break;
-						case '<=':
-							shouldAddToArray = row[key] <= value;
-							break;
-					}
-					if(shouldAddToArray)
+					let shouldAddToArray = doesRowMathComparison(
+						row,
+						key,
+						value,
+						comparison
+					);
+					if(shouldAddToArray){
 						selectedArray.push(row);
+					}
 				});
 
 				resultArray = selectedArray;
@@ -98,9 +168,7 @@ function select(tableName, queryObj){
 		return resultArray;
 	}
 }
-
-function construct(){
-}
+// #section-end Public API
 
 module.exports = construct;
 module.exports.createTable = createTable;
