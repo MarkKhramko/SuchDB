@@ -22,7 +22,8 @@
   "scripts": {
     "test:full": "node ./tests/full/index.js",
     "test:async": "node ./tests/async/index.js",
-    "test:select": "node ./tests/select/index.js"
+    "test:select": "node ./tests/select/index.js",
+    "test:database": "node ./tests/database/index.js"
   },
   "dependencies": {
     "uuid": "^8.3.2"
