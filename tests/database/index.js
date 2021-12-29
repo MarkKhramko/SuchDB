@@ -38,6 +38,19 @@ function _run() {
 		throw new Error(`Table's realRowsCount is ${table.realRowsCount}, should be ${numberOfRecords}`);
 	}
 
+	// Check first & last row:
+	const firstRow = db.selectFirstRow('transactions');
+	if (firstRow.profit !== 0) {
+		console.error(`Table's first row is corrupted.`, firstRow);
+		throw new Error(`Table's first row is corrupted.`);
+	}
+
+	const lastRow = db.selectLastRow('transactions');
+	if (lastRow.profit !== numberOfRecords - 1) {
+		console.error(`Table's last row is corrupted.`, lastRow);
+		throw new Error(`Table's last row is corrupted.`);
+	}
+
 	console.info('Test passed!');
 	return true;
 }
