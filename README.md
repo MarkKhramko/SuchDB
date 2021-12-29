@@ -26,11 +26,11 @@ const table = db.createTable('transactions');
 
 // Insert record:
 const data = {
-							 'amount': 90,
-							 'currency': 'Euro',
-							 'sender': 'John Appleseed',
-							 'receiver': 'Steve Props'
-						 };
+	'amount': 90,
+	'currency': 'Euro',
+	'sender': 'John Appleseed',
+	'receiver': 'Steve Props'
+};
 db.insert('transactions', data);
 // or
 table.insert(data);
