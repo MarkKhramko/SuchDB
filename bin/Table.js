@@ -80,31 +80,6 @@ function _findById(id) {
 }
 
 /**
- * Sets record as deleted (as null).
- *
- * @param <String> id
- */
-function _deleteById(id) {
-	const rowIndex = this.hashTable[id];
-
-	// If it's last element of array, delete it:
-	if (rowIndex === this.realRowsCount-1) {
-		this.rows.pop();
-		this.realRowsCount--;
-	}
-	// Otherwise, set this row as null:
-	else {
-		this.rows[rowIndex] = null;
-	}
-
-	// Decrease rowsCount.
-	this.rowsCount--;
-
-	// Delete id from hash.
-	delete this.hashTable[id];
-}
-
-/**
  * Returns first inserted row.
  * 
  * @return <Object>
@@ -180,4 +155,29 @@ async function _select(queryObj) {
 	catch(error) {
 		return Promise.reject(error);
 	}
+}
+
+/**
+ * Sets record as deleted (as null).
+ *
+ * @param <String> id
+ */
+function _deleteById(id) {
+	const rowIndex = this.hashTable[id];
+
+	// If it's last element of array, delete it:
+	if (rowIndex === this.realRowsCount-1) {
+		this.rows.pop();
+		this.realRowsCount--;
+	}
+	// Otherwise, set this row as null:
+	else {
+		this.rows[rowIndex] = null;
+	}
+
+	// Decrease rowsCount.
+	this.rowsCount--;
+
+	// Delete id from hash.
+	delete this.hashTable[id];
 }
