@@ -1,5 +1,5 @@
 // Config:
-const numberOfRecords = 500;
+const numberOfRecords = 5000;
 const mod = 4;
 // SuchDB.
 const { Database } = require('../../index');
@@ -9,19 +9,22 @@ module.exports = _run();
 
 async function _run() {
 	try {
-		const DB = new Database('async_test');
+		const db = new Database('async_test');
 
-		const table = DB.createTable('transactions');
+		const table = db.createTable('transactions');
 
 		const insertions = [];
-		for (let i=0; i < numberOfRecords; i++) {
+		
+		let i =0;
+		while(i < numberOfRecords) {
 			const rowData = {
-				buy: 3021.31 + i,
-				sell: 3021.31,
+				buy: 3021.31,
+				sell: 3021.31 + i,
 				profit: i,
 			}
 
 			insertions.push(rowData);
+			i++;
 		}
 
 		let maxInterval = 0;
@@ -43,8 +46,6 @@ async function _run() {
 
 		// Wait for all operations.
 		await (new Promise(resolve => setTimeout(resolve, maxInterval)));
-
-		console.log({ table });
 
 		// Check table:
 		const properCount = numberOfRecords - numberOfRecords/mod;

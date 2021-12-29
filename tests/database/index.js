@@ -1,7 +1,9 @@
 // Config:
-const numberOfRecords = 500;
+const numberOfRecords = 50000;
 // SuchDB.
 const { Database } = require('../../index');
+// Perfomance measure.
+const { performance } = require('perf_hooks');
 
 
 module.exports = _run();
@@ -11,18 +13,7 @@ function _run() {
 
 	db.createTable('transactions');
 
-	let i = 0;
-	while(i < numberOfRecords) {
-		const rowData = {
-			buy: 3021.31,
-			sell: 3021.31 + i,
-			profit: i,
-		}
-
-		db.insert('transactions', rowData);
-
-		i++;
-	}
+	_insertPseudoRecords(db, 'transactions');
 
 	// Check table:
 	const table = db.getTable('transactions');
@@ -53,4 +44,30 @@ function _run() {
 
 	console.info('Test passed!');
 	return true;
+}
+
+function _insertPseudoRecords(
+	database,
+	tableName
+) {
+	const startTime = performance.now();
+
+	// Insert X records:
+	let i = 0;
+	while(i < numberOfRecords) {
+		const rowData = {
+			buy: 3021.31,
+			sell: 3021.31 + i,
+			profit: i,
+			name: `name_${i}`,
+		}
+
+		database.insert(tableName, rowData);
+
+		i++;
+	}
+
+	const endTime = performance.now();
+
+	console.log(`Call to insert ${numberOfRecords} took ${endTime - startTime} milliseconds`);
 }
