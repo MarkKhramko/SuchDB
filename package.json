@@ -1,6 +1,6 @@
 {
   "name": "suchdb",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Real time JSON database, fully loaded into ram.",
   "main": "index.js",
   "repository": {
@@ -26,6 +26,6 @@
     "test:database": "node ./tests/database/index.js"
   },
   "dependencies": {
-    "uuid": "^8.3.2"
+    "nanoid": "^3.1.30"
   }
 }

@@ -1,4 +1,4 @@
-const uuid = require('uuid');
+const { nanoid } = require('nanoid');
 const { doesRowMatchComparison } = require('./utils');
 
 
@@ -46,7 +46,7 @@ module.exports = function Table(name=undefined) {
  */
 function _insert(rowData={}) {
 	// Generate unique random id.
-	const id = uuid.v4();
+	const id = nanoid();
 
 	const _record = {
 		...rowData,
