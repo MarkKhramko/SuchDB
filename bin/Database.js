@@ -15,13 +15,18 @@ module.exports = function Database(name) {
 	// List of tables.
 	this.tables = {};
 
-	this.createTable = _createTable.bind(this);
-
 	// Operations with tables:
+	this.createTable = _createTable.bind(this);
+	this.getTable = _getTable.bind(this);
+
+	// Operations in tables:
 	this.insert = _insert.bind(this);
 	this.findById = _findById.bind(this);
 	this.select = _select.bind(this);
 	this.deleteById = _deleteById.bind(this);
+
+	// Validation:
+	this.validateTableExistance = _validateTableExistance.bind(this);
 }
 
 /**
@@ -29,7 +34,7 @@ module.exports = function Database(name) {
  *
  * @param <String> tableName
  *
- * @return <Bool>
+ * @return <Table>
  */
 function _createTable(
 	tableName
@@ -45,6 +50,27 @@ function _createTable(
 }
 
 /**
+ * Returns table if exists,
+ * return null, if table with this name not found.
+ *
+ * @param <String> tableName
+ *
+ * @return <Table>
+ */
+function _getTable(
+	tableName
+) {
+	try {
+		this.validateTableExistance(tableName);
+	}
+	catch(error) {
+		return false;
+	}
+
+	return this.tables[tableName];
+}
+
+/**
  * Returns newly inserted row.
  *
  * @param <String> tableName
@@ -56,10 +82,10 @@ function _insert(
 	tableName,
 	rowData={}
 ) {
-	_errorIfTableDoesntExist(tableName);
+	this.validateTableExistance(tableName);
 	
 	const table = this.tables[tableName];
-	return table.insert(row);
+	return table.insert(rowData);
 }
 
 /**
@@ -75,7 +101,7 @@ function _findById(
 	tableName,
 	id
 ) {
-	_errorIfTableDoesntExist(tableName);
+	this.validateTableExistance(tableName);
 
 	const table = this.tables[tableName];
 	return table.findById(id);
@@ -96,7 +122,7 @@ async function _select(
 	tableName,
 	queryObj
 ) {
-	_errorIfTableDoesntExist(tableName);
+	this.validateTableExistance(tableName);
 
 	const table = this.tables[tableName];
 	return table.select(queryObj);
@@ -112,7 +138,7 @@ function _deleteById(
 	tableName,
 	id
 ) {
-	_errorIfTableDoesntExist(tableName);
+	this.validateTableExistance(tableName);
 
 	const table = this.tables[tableName];
 	return table.deleteById(id);
@@ -123,7 +149,7 @@ function _deleteById(
  *
  * @param <String> tableName
  */
-function _errorIfTableDoesntExist(tableName) {
+function _validateTableExistance(tableName) {
 	if (!this.tables[tableName]) {
 		const err = new Error(`Table ${tableName} doesn't exist.`);
 		throw err;
