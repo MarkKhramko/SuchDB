@@ -19,13 +19,21 @@ module.exports = function Database(name) {
 	this.createTable = _createTable.bind(this);
 	this.getTable = _getTable.bind(this);
 
+	
 	// Operations in tables:
-	this.insert = _insert.bind(this);
-	this.findById = _findById.bind(this);
-	this.select = _select.bind(this);
-	this.deleteById = _deleteById.bind(this);
 
-	// Validation:
+	// 	Create.
+	this.insert = _insert.bind(this);
+
+	//	Read:
+	this.findById = _findById.bind(this);
+	this.selectFirstRow = _selectFirstRow.bind(this);
+	this.selectLastRow = _selectLastRow.bind(this);
+	this.select = _select.bind(this);
+
+	// Operations in tables\
+
+	// Validations.
 	this.validateTableExistance = _validateTableExistance.bind(this);
 }
 
@@ -89,13 +97,12 @@ function _insert(
 }
 
 /**
- * Returns array with one row, where id is equal to given
- * or empty array, if nothing found.
- * Returns Error object, if given table doesnt exists
+ * Returns found row or null.
  *
  * @param <String> tableName
  * @param <String> id
- * @return <Array>
+ *
+ * @return <Object>
  */
 function _findById(
 	tableName,
@@ -105,6 +112,34 @@ function _findById(
 
 	const table = this.tables[tableName];
 	return table.findById(id);
+}
+
+/**
+ * Returns first inserted row.
+ *
+ * @param <String> tableName
+ * 
+ * @return <Object>
+ */
+function _selectFirstRow(tableName) {
+	this.validateTableExistance(tableName);
+
+	const table = this.tables[tableName];
+	return table.selectFirstRow();
+}
+
+/**
+ * Returns last inserted row.
+ *
+ * @param <String> tableName
+ * 
+ * @return <Object>
+ */
+function _selectLastRow(tableName) {
+	this.validateTableExistance(tableName);
+
+	const table = this.tables[tableName];
+	return table.selectLastRow();
 }
 
 /**
