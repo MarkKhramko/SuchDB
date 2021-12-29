@@ -51,6 +51,19 @@ const result = db.findById('transactions', '<uuid>');
 // ]
 ```
 
+### Select first or last row
+```js
+const firstRow = db.selectFirstRow('transactions');
+const lastRow = db.selectLastRow('transactions');
+````
+
+### Delete
+```js
+// (considering data in previous example)
+db.deleteById('transactions', '<uuid>');
+```
+
+
 ## Query usage:
 ```js
 const { Query } = require('suchdb');
@@ -70,10 +83,4 @@ const rows = db.select('transactions', query);
 //		'receiver': 'Steve Props'
 //	}
 // ]
-```
-
-## Delete
-```js
-// (considering data in previous example)
-db.deleteById('transactions', '<uuid>');
 ```
