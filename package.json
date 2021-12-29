@@ -3,27 +3,28 @@
   "version": "0.0.1",
   "description": "Real time JSON database, fully loaded into ram.",
   "main": "index.js",
-  "scripts": {
-    "test": "test"
-  },
-  "dependencies": {
-    "uuid": "^3.1.0"
-  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MarkKhramko/RamDB.git"
+    "url": "git+https://github.com/MarkKhramko/SuchDB.git"
   },
   "keywords": [
     "real-time",
     "database",
     "ram",
-    "JSON",
-    "document"
+    "JSON"
   ],
-  "author": "Mark Khramko",
+  "author": "Mark Khramko <markkhramko@gmail.com>",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/MarkKhramko/RamDB/issues"
+    "url": "https://github.com/MarkKhramko/SuchDB/issues"
   },
-  "homepage": "https://github.com/MarkKhramko/RamDB#readme"
+  "homepage": "https://github.com/MarkKhramko/SuchDB#readme",
+  "scripts": {
+    "test:full": "node ./tests/full/index.js",
+    "test:async": "node ./tests/async/index.js",
+    "test:select": "node ./tests/select/index.js"
+  },
+  "dependencies": {
+    "uuid": "^8.3.2"
+  }
 }
