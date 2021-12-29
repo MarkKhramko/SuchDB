@@ -1,0 +1,5 @@
+# Git file
+.gitignore
+
+# Tests directory
+tests/
