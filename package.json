@@ -1,6 +1,6 @@
 {
   "name": "suchdb",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Real time JSON database, fully loaded into ram.",
   "main": "index.js",
   "repository": {
